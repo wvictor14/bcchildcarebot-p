@@ -8,9 +8,20 @@ server: shiny
 ```{python}
 #| context: setup
 import seaborn as sns
+import pandas as pd
+from datetime import datetime
 from shiny import reactive
 from shiny.express import render, ui
 penguins = sns.load_dataset("penguins")
+```
+
+```{python}
+#| context: setup
+# read in bc child care data ----
+url = 'https://catalogue.data.gov.bc.ca/dataset/4cc207cc-ff03-44f8-8c5f-415af5224646/resource/9a9f14e1-03ea-4a11-936a-6e77b15eeb39/download/childcare_locations.csv'
+bccc = pd.read_csv(url)
+#.today <- lubridate::today(tzone = 'Canada/Pacific')
+.today = datetime.today().strftime('%Y-%m-%d')
 ```
 
 # {.sidebar}
