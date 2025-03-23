@@ -33,10 +33,23 @@ bccc['VACANCY_LAST_UPDATE'] = pd.to_datetime(
     errors = 'coerce'
 )
 
+
+# filter to last vacancy update - n days
 dataset_last_update = bccc['VACANCY_LAST_UPDATE'].max()
 updated_last_n_days = bccc['VACANCY_LAST_UPDATE'] >= \
     (dataset_last_update - timedelta(days = 3+1))
 bccc_most_updated = bccc[updated_last_n_days]
+
+# select columns
+bccc_most_updated[[
+    'SERVICE_TYPE_CD', 'NAME', 'ADDRESS_1', 'ADDRESS_2', 'CITY', 'PHONE', 
+    'WEBSITE', 'EMAIL', 'LONGITUDE', 'LATITUDE', 'ECE_CERTIFICATION_YN', 
+    'ELF_PROGRAMMING_YN', 'IS_INCOMPLETE_IND','IS_CCFRI_AUTH']].\
+    join(bccc_most_updated.filter(regex='LANG'))
+column_to_move = 'NAME'
+columns = [column_to_move] + \
+    [col for col in bccc_most_updated.columns if col != column_to_move]
+bccc_most_updated = bccc_most_updated[columns]
 
 tbl_data <- bccc |>
   
