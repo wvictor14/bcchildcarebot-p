@@ -51,6 +51,22 @@ columns = [column_to_move] + \
     [col for col in bccc_most_updated.columns if col != column_to_move]
 bccc_most_updated = bccc_most_updated[columns]
 
+# create leaflet popup
+def create_popup(row):
+   lines = [
+    f"<b>{row['NAME']}</b>", 
+    f"{row['SERVICE_TYPE_CD']}",
+    f"{row['PHONE']}",
+    "<br>Vacancy:",
+    f"&nbsp;&nbsp;&nbsp;&nbsp;<36 months: {row['VACANCY_SRVC_UNDER36']}",
+    f"&nbsp;&nbsp;&nbsp;&nbsp;30 months -- 5 years: {row['VACANCY_SRVC_30MOS_5YRS']}",
+    f"&nbsp;&nbsp;&nbsp;&nbsp;Preschool: {row['VACANCY_SRVC_LICPRE']}",
+    f"&nbsp;&nbsp;&nbsp;&nbsp;Grade 1 - Age 12: {row['VACANCY_SRVC_OOS_GR1_AGE12']}",
+   ] 
+   return "<br>".join(lines)
+
+bccc_most_updated['popup'] = bccc_most_updated.apply(create_popup, axis = 1)
+
 tbl_data <- bccc |>
   
   # filter to last vacancy update - n days
