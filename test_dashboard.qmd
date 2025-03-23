@@ -1,6 +1,6 @@
 ---
-title: "Palmer Penguins"
-author: "Cobblepot Analytics"
+title: "BC Child Care Vacancies"
+author: "Victor Yuan"
 format: dashboard
 server: shiny
 ---
